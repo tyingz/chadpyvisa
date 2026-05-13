@@ -4,6 +4,13 @@ import numpy as np
 import time
 import matplotlib.pyplot as plt
 
+def printResources():
+    rm = pyvisa.ResourceManager()
+    recursos = rm.list_resources()
+    for i in recursos:
+        recursoI = rm.open_resource(i)
+        print(f"el recursos {i} es: {recursoI.query('*IDN?').strip()}")
+
 class osciloscopio:
     def __init__(self, resourceName):
         try: 

@@ -1,12 +1,6 @@
-import generador
-import osciloscopio
+import chadpyvisa
 
-def printResources():
-    rm = pyvisa.ResourceManager()
-    recursos = rm.list_resources()
-    for i in recursos:
-        recursoI = rm.open_resource(i)
-        print(f"el recursos {i} es: {recursoI.query('*IDN?').strip()}")
-
-if __name__ == "__main__":
-    printResources()
+# ejemplos recomendado usar primero printResources
+#rm = chadpyvisa.printResources()
+#gen = chadpyvisa.generador("ID_DEL_GEN")
+#osci = chadpyvisa.osciloscopio("ID_DEL_OSCI")
