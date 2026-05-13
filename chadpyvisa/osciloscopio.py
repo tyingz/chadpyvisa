@@ -18,7 +18,7 @@ class osciloscopio:
             self.osc = self.rm.open_resource(resourceName)
             self.osc.timeout = 5000 
         except:
-            print("fallo al iniciar")
+            print("Fallo al iniciar el osciloscopio")
 
     def hacer(self, accion):
         self.osc.write(accion)
@@ -26,7 +26,7 @@ class osciloscopio:
     def preguntar(self,accion):
         self.osc.query(accion)
 
-    def darPantalla(self, canal = 1):
+    def darPantalla(self, canal = 1, grafico = False):
         self.hacer('HEADER OFF')
         self.hacer('DAT:ENC RPB')
         self.hacer('DAT:WID 1')
@@ -38,6 +38,13 @@ class osciloscopio:
         dataCH1 = self.osc.query_binary_values('CURV?', datatype='B', container=np.array) 
         tiempo = xze1 + np.arange(len(dataCH1)) * xin1
         voltaje = (dataCH1 - yoff1) * ymu1 + yze1
+        if (grafico == True):
+            plt.scatter(tiempo, voltaje)
+            plt.xlabel('Tiempo (s)')
+            plt.ylabel('Voltaje (V)')
+            plt.title('Voltaje en función del tiempo')
+            plt.grid(True)
+            plt.show()
         return voltaje,tiempo
 
     def darVpp(self, canal = 1):
@@ -57,6 +64,8 @@ class osciloscopio:
 
     def autoSet(self):
         self.hacer('AUTOS EXEC')
+        time.sleep(3)
+
 
 
 

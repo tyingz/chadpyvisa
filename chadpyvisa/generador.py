@@ -1,3 +1,8 @@
+import pyvisa
+import pandas as pd
+import numpy as np
+import time
+import matplotlib.pyplot as plt
 
 class generador:
     def __init__(self, resourceName):
@@ -10,9 +15,11 @@ class generador:
 
     def hacer(self, accion):
         self.gen.write(accion)
+        time.sleep(2)
 
     def preguntar(self,accion):
         self.gen.query(accion)
+        time.sleep(2)
 
     def cambiarFrecuencia(self, valor, canal = 1):
         self.hacer(f'SOURCE{canal}:FREQ {valor}')
